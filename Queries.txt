@@ -1,0 +1,121 @@
+--1 consulta envolvendo	apenas	as	operações	de	seleção	e	projeção;
+
+-- Retorna a tupla Idade / Sexo de cada candidato (Pode ser trabalhado com gráficos) -- Talvez usar um Group BY
+
+select Candidato.idade as Idade,
+	   Candidato.sexo  as Sexo,
+	   Candidato.cor   as Cor
+from   Candidato
+-- where Idade >= @idadeInicial and Idade <= @idadeFinal (Possibilidade de usar filtros de Idade para tratar melhor a query)
+
+
+
+
+--2 consultas	envolvendo	a	junção	de	apenas	duas	relações,	sendo	que	uma	deve	conter	junção	externa;
+
+-- Seleciona os Os municipios / Ruas e os Nomes das escolas que estão nelas, Caso não haja, retorna Nulo
+
+select Endereco.Municipio as Municipio,
+	   Endereco.Rua as Rua,
+	   Endereco.UF as Estado,
+	   Escola.Nome as NomeDaEscola,
+from   Endereco
+left outer join Escola on Endereco.Cod_Endereco = Escola.fk_Endereco_Cod_Endereco
+
+-- Retorna a tupla (Idade, Sexo e Cor) dos candidatos que realizaram a prova especial (Relacionar com a primeira query) -- Talvez usar um Group BY
+
+select Candidato.idade as Idade,
+	   Candidato.sexo as Sexo,
+	   Candidato.cor as Cor
+inner join Realiza on Realiza.fk_Candidato_Nu_Inscricao = Candidato.Nu_Inscricao
+where Realiza.Especial = 'S'
+
+
+
+
+--2 consultas	envolvendo	a	junção	de	três	ou	mais	relações;
+
+-- Retorna a Média, nota máximo e Nota mínima de cada Tipo de Escola
+
+select Escola.Tipo as [Tipo da Escola],
+	   avg(Prova.Nota) as [Média das Notas],
+	   max(Prova.Nota) as [Nota Máxima],
+	   min(Prova.Nota) as [Nota Mínima]
+from Escola
+inner join Candidato on Candidato.fk_Escola_Cod_Escola = Escola.Cod_Escola
+inner join Realiza on Candidato.Nu_Inscricao = Realiza.fk_Candidato_Nu_Inscricao
+inner join Prova on Realiza.fk_Prova_Cod_Prova = Prova.Cod_Prova
+Group By [Tipo da Escola]
+
+-- Retorna o Numero de Notas acima da média por Tipo de Escola
+
+select  Escola.Tipo as [Tipo da Escola],
+		Count(Comp_Acima_Media.Comp_Acima_Media) as [Numero de Notas Acima da Média]
+from Escola
+inner join Candidato on Candidato.Escola_Cod_Escola = Escola.Cod_Escola
+inner join Comp_Acima_Media on Comp_Acima_Media.Comp_Acima_Media_PK = Candidato.fk_Comp_Acima_Media
+Group BY [Tipo da Escola]
+
+
+
+--1 consulta envolvendo	uma	das	operações	sobre	conjuntos (união,	diferença	ou intersecção);
+
+
+
+
+
+
+
+--3 consultas	envolvendo	funções	de	agregação;
+
+-- Retorna a quantidade de candidatos de determinado Sexo e Cor
+
+select Candidato.Sexo as [Sexo],
+	   Candidato.Cor as [Cor],
+	   Count(Candidato.Sexo) as [Quantidade por Sexo],
+	   Count(Candidato.Cor) as [Quantidade por Cor]
+	   
+from   Candidato
+Group BY [Sexo], [Cor]
+
+-- Retorna O numero de vezes que a tupla (Sexo e Cor) ficaram acima da média (Da pra relacionar com a Query acima)
+
+select 
+	   Candidato.Sexo as [Sexo],
+	   Candidato.Cor as [Cor],
+	   Comp_Acima_Media.Comp_Acima_Media as [Competencia],
+	   Count(Comp_Acima_Media.Comp_Acima_Media) as [Numero de Ocorrencias]
+	   
+from   Candidato
+inner join Comp_Acima_Media on Candidato.fk_Comp_Acima_Media = Comp_Acima_Media.Comp_Acima_Media_PK
+Group BY [Competencia], [Sexo], [Cor]
+
+-- Retorna a nota média para os candidatos de determinada Cor / Sexo
+
+select  
+		Candidato.Sexo,
+		Candidato.Cor
+		avg(Prova.Nota)
+from Prova
+inner join Realiza on Prova.Cod_Prova = Realiza.fk_Prova_Cod_Prova
+inner join Candidato on Realiza.fk_Candidato_Nu_Inscricao = Candidato.Nu_Inscricao
+-- where Idade >= @idadeInicial and Idade <= @idadeFinal (Possibilidade de usar filtros de Idade para tratar melhor a query) and Candidato.Sexo == @sexoBuscado
+Group BY Candidato.Sexo, Candidato.Cor
+
+
+
+
+
+--1 consulta	envolvendo	subconsultas	aninhadas.
+
+-- Retorna o Numero de Candidatos por tipo De escola
+
+select Count(TB.[Inscricao]) as [Numero de Candidatos],
+       TB.[Tipo da Escola] as [Tipo da Escola]
+from
+	   (select Candidato.Nu_Inscricao as [Inscricao],
+			   Escola.Tipo as [Tipo da Escola]
+			   inner join Escola on Candidato.fk_Escola_Cod_Escola = Escola.Cod_Escola
+		)
+Group By [Tipo da Escola]
+
