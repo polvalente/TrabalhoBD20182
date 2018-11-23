@@ -1,9 +1,41 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, flash
+from flask_wtf import Form
+from wtforms import TextField, SubmitField, RadioField, SelectField
 app = Flask(__name__)
+app.secret_key = 'development key'
 
-@app.route('/')
+
+@app.route('/', methods=["GET", "POST"])
 def index():
-    return render_template('index.html')
+    query_form = QueryForm()
+    if request.method == 'POST':
+        if query_form.validate() == False:
+            flash('Preenchimento inválido do formulário')
+            return render_template('index.html/#query', form=query_form)
+        else:
+            # executar query e mostrar resultados
+            return render_template('results.html', results=query_from_form(query_form)))
+    elif request.method == 'GET':
+        return render_template('index.html', form=query_form)
+
+class QueryForm(Form):
+    Sexo = SelectField('Sexo', choices = [
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('X', 'Outros')
+        ])
+
+    Cor = SelectField('Cor', choices = [
+        ('1', 'Cor1'),
+        ('2', 'Cor2')
+        ])
+
+    Query = SelectField('Queries', choices = [
+        ('1', 'Informação dos candidatos'),
+        ('2', 'Escolas por Município')
+        ])
+
+    submit = SubmitField("Consultar")
 
 # select e projecao
 def get_candidato_info():
