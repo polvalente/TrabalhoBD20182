@@ -13,26 +13,36 @@ def index():
             flash('Preenchimento inválido do formulário')
             return render_template('index.html/#query', form=query_form)
         else:
-            # executar query e mostrar resultados
-            return render_template('results.html', results=query_from_form(query_form)))
+            # executar query e mostrar resultados (o template a ser usa)
+            return render_template('results.html', results=query_from_form(query_form))
     elif request.method == 'GET':
         return render_template('index.html', form=query_form)
 
 class QueryForm(Form):
     Sexo = SelectField('Sexo', choices = [
         ('M', 'Masculino'),
-        ('F', 'Feminino'),
-        ('X', 'Outros')
+        ('F', 'Feminino')
         ])
 
     Cor = SelectField('Cor', choices = [
-        ('1', 'Cor1'),
-        ('2', 'Cor2')
+        ('Não Declarado', 'Não Declarado'),
+        ('Branca', 'Branca'),
+        ('Preta', 'Preta'),
+        ('Parda', 'Parda'),
+        ('Amarela', 'Amarela'),
+        ('Indígena', 'Indígena')
         ])
 
     Query = SelectField('Queries', choices = [
-        ('1', 'Informação dos candidatos'),
-        ('2', 'Escolas por Município')
+        (0, 'Informação dos candidatos'),
+        (1, 'Escolas por município'),
+        (2, 'Candidatos com necessidades especiais'),
+        (3, 'Métricas por tipo de escola'),
+        (4, 'Número de notas acima da média por tipo de escola'),
+        (5, 'Candidatos por tipo de escola'),
+        (6, 'Quantidade de candidatos por sexo e cor*'),
+        (7, 'Candidatos acima da média por sexo e cor*'),
+        (8, 'Média por sexo e cor*')
         ])
 
     submit = SubmitField("Consultar")

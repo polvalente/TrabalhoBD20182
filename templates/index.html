@@ -102,7 +102,7 @@
                   <fieldset>
                       {{ form.hidden_tag() }}
 
-                      <div style = font-size:20px; font-weight:bold; margin-left:150px;>
+                      <div style = font-size:20px; font-weight:bold; margin-left:150px; id="formDiv">
                         {{ form.Query.label }}<br>
                         {{ form.Query }}
                         <br>
@@ -120,6 +120,45 @@
                       </div>
                   </fieldset>
                 </form>
+                <script>
+                  let queryField = document.querySelector('#formDiv > select#Query');
+
+                  // disable other fields by default
+                  let enable_fields = (v) =>{
+                    let corLabel = document.querySelector('label[for="Cor"]');
+                    let corField = document.querySelector('#formDiv > #Cor');
+                    let sexoLabel = document.querySelector('label[for="Sexo"]');
+                    let sexoField = document.querySelector('#formDiv > #Sexo');
+
+                    if(v){
+                      //enable
+                      corLabel.style="display: true";
+                      corField.style="display: true";
+                      corField.disabled = false;
+                      sexoLabel.style="display: true";
+                      sexoField.style="display: true";
+                      sexoField.disabled = false;
+                    }
+                    else{
+                      corLabel.style="display: none";
+                      corField.style="display: none";
+                      corField.disabled = true;
+                      sexoLabel.style="display: none";
+                      sexoField.style="display: none";
+                      sexoField.disabled = true;
+                    }
+                  }
+
+                  enable_fields(false);
+
+                  queryField.onchange = () => {
+                      let corField = document.querySelector('#formDiv > #Cor');
+                      let sexoField = document.querySelector('#formDiv > #Sexo');
+
+                      let index = queryField.selectedIndex;
+                      enable_fields(index >= 6);
+                  }
+                </script>
               </div>
             </div>
 
