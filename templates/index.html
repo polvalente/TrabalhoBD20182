@@ -71,27 +71,13 @@
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-          <a href="#overview" class="mdl-layout__tab is-active">Início</a>
-          <a href="#queries" class="mdl-layout__tab">Consultas</a>
+          <a href="#queries" class="mdl-layout__tab is-active">Consultas</a>
+          <a href="#overview" class="mdl-layout__tab">Sobre</a>
           <a href="#authors" class="mdl-layout__tab">Autores</a>
         </div>
       </header>
       <main class="mdl-layout__content">
-        <div class="mdl-layout__tab-panel is-active" id="overview">
-            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                <div class="mdl-card mdl-cell mdl-cell--12-col">
-                  <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
-                    <h4 class="mdl-cell mdl-cell--12-col">Sobre o sistema</h4>
-                    <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-                      <div class="section__circle-container__circle mdl-color--primary"></div>
-                    </div>
-                    <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                        Este é um sistema simples para consulta de alguns dados do ENEM 2014.
-                        Na página <b>Consultas</b> é possível realizar tais consultas.
-                    </div>
-              </section>
-        </div>
-        <div class="mdl-layout__tab-panel" id="queries">
+        <div class="mdl-layout__tab-panel is-active" id="queries">
           <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
             <div class="mdl-card mdl-cell mdl-cell--12-col">
               <div class="mdl-card__supporting-text">
@@ -151,34 +137,34 @@
 
                   enable_fields(false);
 
-                  queryField.onchange = () => {
+                  /*queryField.onchange = () => {
                       let corField = document.querySelector('#formDiv > #Cor');
                       let sexoField = document.querySelector('#formDiv > #Sexo');
 
                       let index = queryField.selectedIndex;
                       enable_fields(index >= 6);
-                  }
+                  }*/
                 </script>
               </div>
             </div>
 
           </section>
-          <section class="section--footer mdl-color--white mdl-grid">
-            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-              <div class="section__circle-container__circle mdl-color--accent section__circle--big"></div>
-            </div>
-            <div class="section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-              <h5>Lorem ipsum dolor sit amet</h5>
-              Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
-            </div>
-            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-              <div class="section__circle-container__circle mdl-color--accent section__circle--big"></div>
-            </div>
-            <div class="section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-              <h5>Lorem ipsum dolor sit amet</h5>
-              Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
-            </div>
-          </section>
+        </div>
+        <div class="mdl-layout__tab-panel" id="overview">
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+                <div class="mdl-card mdl-cell mdl-cell--12-col">
+                  <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+                    <h4 class="mdl-cell mdl-cell--12-col">Sobre o sistema</h4>
+                    <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                      <div class="section__circle-container__circle mdl-color--primary"></div>
+                    </div>
+                    <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                        Este é um sistema simples para consulta de alguns dados do ENEM 2014.
+                        Na página <b>Consultas</b> é possível realizar tais consultas.
+                    </div>
+                  </div>
+                </div>
+            </section>
         </div>
         <div class="mdl-layout__tab-panel" id="authors">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
